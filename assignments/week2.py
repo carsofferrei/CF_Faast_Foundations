@@ -1,11 +1,18 @@
+"""
+Pylint Tutorial
+"""
+
+#pylint: disable=too-few-public-methods
 class Car:
-    """Creates a car"""
-    def __init__(self, color):
+    """Creates a Car"""
+    def __init__(self, color): 
         self.color = color
 
-my_car = Car('blue')
 
-def crash(car1) :
+MY_CAR = Car('blue')
+
+def crash(car1, car2): #pylint: disable=too-few-public-methods
+    """An example function"""
     car1.color = 'burnt'
 
-crash(Car('red'))
+crash(Car('red'), MY_CAR)
