@@ -10,7 +10,7 @@ authors = [
 dependencies = ["pandas"]
 
 [project.optional-dependencies]
-dev = ["pytest", "pylint", "pytest-cov", "toml"]
+dev = ["pytest", "pylint", "pytest-cov", "toml", "mypy"]
 
 [build-system]
 requires = ["setuptools>=61.0"]
@@ -35,4 +35,4 @@ disable = [
 ]
 
 [project.scripts]
-life_expectancy = "life_expectancy.cleaning:__main__"
+life_expectancy = "life_expectancy.cleaning:main"
