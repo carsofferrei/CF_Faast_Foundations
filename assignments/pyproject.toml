@@ -29,5 +29,10 @@ fail_under = 80
 
 [tool.pylint."messages control"]
 disable = [
-   "missing-module-docstring"
+   "missing-module-docstring",
+   "line-too-long",
+   "trailing-whitespace"
 ]
+
+[project.scripts]
+life_expectancy = "life_expectancy.cleaning:__main__"

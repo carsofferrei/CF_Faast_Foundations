@@ -15,6 +15,7 @@ import pylint
 import pytest_cov
 import pandas as pd
 
+
 from . import PROJECT_DIR
 
 
