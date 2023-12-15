@@ -49,7 +49,7 @@ def clean_data(input_path: str|Path, output_path: str|Path, region: str):
     print(f"Finish data cleaning The file was saved as csv in:\n{output_path}\n")
 
 
-def main():
+def main(): # pragma: no cover
     """
     Parser setup + call clean data function
     """
