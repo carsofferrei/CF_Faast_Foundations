@@ -3,23 +3,32 @@ import argparse
 from pathlib import Path
 import pandas as pd
 
-def clean_data(input_path: str|Path, output_path: str|Path, region: str):
-    """Function to clean data"""
 
-    #load data from the file path
-    df0 = pd.read_csv(input_path, sep="[\t]", engine="python")
+def load_data(input_path: str|Path) -> pd.DataFrame:
+    """Function that load the data
+    :param df: local where the file is located. Search in __init__.py to find OUTPUT_DIR. Raw data.
+    """
+    df = pd.read_csv(input_path, sep="[\t]", engine="python")
+    return df
+
+
+def clean_data(df: pd.DataFrame, region: str) -> pd.DataFrame:
+    """Function that load the data
+    :param df: file that was retrieved in load_data() function
+    :param region: define the region the user wants to filter. Possible values: 
+    """
 
     #Obtains the values from the first column - main objetive here is to get the country info
-    df1 =  df0.iloc[:, 0]
+    df1 = df.iloc[:, 0]
     df1 = df1.str.split(',', n=4, expand=True)
     #rename columns
     new_columns = ["unit","sex","age","region"]
     df1 = df1.set_axis(new_columns, axis=1)
 
     #Obtain the year and values information of each country
-    df2 =  df0.iloc[:,1:]
+    df2 = df.iloc[:,1:]
     #Remove the dots from the columns
-    df2=df2.replace(re.compile(r"\s*:\s*"),"")
+    df2 = df2.replace(re.compile(r"\s*:\s*"),"")
     #Remove the letters from the columns
     df2 = df2.replace({r'([a-zA-Z]*)':""},regex=True)
 
@@ -44,26 +53,36 @@ def clean_data(input_path: str|Path, output_path: str|Path, region: str):
     #Filer the final dataset
     df = df[df['region'] == region]
 
-    #Export that file into the folder
+    return df
+
+def save_data(df: pd.DataFrame, output_path: str|Path):
+    """Fuction that save the data into the expercted folder.
+    :param df: file that was retrieved in save_data() function. Cleaned information.
+    :param output_path: local where the file is located. Search in __init__.py to find OUTPUT_DIR
+    """
+
+     #Export that file into the folder
     df.to_csv(output_path, index=False)
     print(f"Finish data cleaning The file was saved as csv in:\n{output_path}\n")
 
 
+
 def main(): # pragma: no cover
     """
-    Parser setup + call clean data function
+    Parser setup + call three functions defined above
     """
     parser = argparse.ArgumentParser()
-    parser.prog = 'clean_data'
+    parser.prog = 'cleaning.py'
     parser.description = "This is where the command-line utility's description goes."
     parser.epilog = "This is where the command-line utility's epilog goes."
     parser.add_argument('-i', default = "/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/eu_life_expectancy_raw.tsv", help="You need to put here the path of the input file")
-    parser.add_argument('-o', default = '/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/pt_life_expectancy.csv', help="You need to put here the path where you want to write the output file")
     parser.add_argument('-r', default= 'PT', help="Filter for the region you want to select.")
+    parser.add_argument('-o', default = '/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/pt_life_expectancy.csv', help="You need to put here the path where you want to write the output file")
     args = parser.parse_args()
-
-    # clean data and return the .csv data to the correct folder
-    clean_data(args.i,args.o, args.r)
+    # call and return the .csv data to the correct folder
+    df = load_data(args.i)
+    df = clean_data(df, args.r)
+    save_data(df, args.o)
 
 if __name__ == "__main__": # pragma: no cover
     main()

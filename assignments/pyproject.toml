@@ -34,5 +34,13 @@ disable = [
    "trailing-whitespace"
 ]
 
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::UserWarning",
+    "ignore:.*U.*pkg_resources is deprecated:DeprecationWarning",
+    'ignore:function ham\(\) is deprecated:DeprecationWarning'
+    ,
+]
+
 [project.scripts]
 life_expectancy = "life_expectancy.cleaning:main"
