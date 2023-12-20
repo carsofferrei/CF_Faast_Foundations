@@ -4,19 +4,31 @@ from pathlib import Path
 import pandas as pd
 
 
-def load_data(input_path: str|Path) -> pd.DataFrame:
+def load_data(input_path: str|Path, delimiter: str = "[\t]") -> pd.DataFrame:
     """Function that load the data
     :param df: local where the file is located. Search in __init__.py to find OUTPUT_DIR. Raw data.
     """
-    df = pd.read_csv(input_path, sep="[\t]", engine="python")
+    if input_path is None: 
+        raise ValueError ("The fuction requires one argument. Please define you're input_path to reach the file.")
+
+    df = pd.read_csv(input_path, sep=f"{delimiter}", engine="python")
     return df
 
 
 def clean_data(df: pd.DataFrame, region: str) -> pd.DataFrame:
     """Function that load the data
     :param df: file that was retrieved in load_data() function
-    :param region: define the region the user wants to filter. Possible values: 
+    :param region: define the region the user wants to filter. Default value = 'PT'.
+    :return df: dataframe after some data treatments as 
+            1. define the default column
+            2. remove special characters from the values
+            3. rename columns
+            4. convert some columns to a specific type and remove NaN rows from value
+            5. filter the data by the region specified on the parameters.
     """
+    if df is None: 
+        raise ValueError ("The fuction requires a DataFrame as an argument.") 
+
 
     #Obtains the values from the first column - main objetive here is to get the country info
     df1 = df.iloc[:, 0]
@@ -48,7 +60,7 @@ def clean_data(df: pd.DataFrame, region: str) -> pd.DataFrame:
     #Convert data types and Clean nan
     df['year'] = df['year'].astype('int')
     df['value'] = pd.to_numeric(df['value'])
-    df = df.dropna()
+    df = df.dropna(subset=['value'])
 
     #Filer the final dataset
     df = df[df['region'] == region]
@@ -60,6 +72,10 @@ def save_data(df: pd.DataFrame, output_path: str|Path):
     :param df: file that was retrieved in save_data() function. Cleaned information.
     :param output_path: local where the file is located. Search in __init__.py to find OUTPUT_DIR
     """
+    if df is None: 
+        raise ValueError ("The fuction requires a DataFrame as an argument.") 
+    if output_path is None: 
+        raise ValueError ("The fuction requires a path to save the file.") 
 
      #Export that file into the folder
     df.to_csv(output_path, index=False)
