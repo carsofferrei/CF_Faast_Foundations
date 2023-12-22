@@ -12,9 +12,9 @@ output_path: Path = OUTPUT_DIR / 'pt_life_expectancy.csv'
 
 def test_clean_data(pt_life_expectancy_expected):
     """Run the `clean_data` function and compare the output to the expected output"""
-    df = load_data(input_path)
-    df = clean_data(df,'PT')
-    save_data(df, output_path)
+    df_loaded = load_data(input_path)
+    df_cleaned = clean_data(df_loaded,'PT')
+    save_data(df_cleaned, output_path)
     pt_life_expectancy_actual = pd.read_csv(
         OUTPUT_DIR / "pt_life_expectancy.csv"
     )
