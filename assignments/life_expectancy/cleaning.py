@@ -9,11 +9,10 @@ def load_data(input_path: str|Path, delimiter: str = "[\t]") -> DataFrame:
     """Function that load the .tsv data
     :param input_path: path where the data to be loaded is located. Search in init.py to find OUTPUT_DIR. Raw data.
     :param delimiter: pass the delimiter appropried when reading the input file
-    :return df_loaded: Loaded dataframe
+    :return DataFrame: Loaded dataframe
     """
+    return pd.read_csv(input_path, sep=delimiter, engine="python")
 
-    df_loaded = pd.read_csv(input_path, sep=delimiter, engine="python")
-    return df_loaded
 
 
 def clean_data(df: DataFrame, region: str) -> DataFrame:
@@ -64,20 +63,19 @@ def clean_data(df: DataFrame, region: str) -> DataFrame:
 
     return df_cleaned
 
+
 def save_data(df: pd.DataFrame, output_path: str|Path) -> None:
     """Fuction that save the data into the expected folder as .csv
     :param df: retrieved from clean_data() function. Cleaned information.
     :param output_path: path where the file is saved. Search in init.py to find OUTPUT_DIR.
     """
-    
-
     #Export that file into the folder
     df.to_csv(output_path, index=False)
     print(f"Finish data cleaning The file was saved as csv in:\n{output_path}\n")
 
 
 
-def main(): # pragma: no cover
+def main() -> None: # pragma: no cover
     """
     Parser setup 
     + 
@@ -92,7 +90,7 @@ def main(): # pragma: no cover
     parser.epilog = "This is where the command-line utility's epilog goes."
     parser.add_argument('-i', default = "/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/eu_life_expectancy_raw.tsv", help="You need to put here the path of the input file")
     parser.add_argument('-d', default= "[\t]", help = "Delimiter.")
-    parser.add_argument('-r', default= 'PT', help="Filter for the region you want to select.")
+    parser.add_argument('-r', default= 'PT', help = "Filter for the region you want to select.")
     parser.add_argument('-o', default = '/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/pt_life_expectancy.csv', help="You need to put here the path where you want to write the output file")
     args = parser.parse_args()
     
