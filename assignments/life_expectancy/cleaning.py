@@ -69,6 +69,7 @@ def save_data(df: pd.DataFrame, output_path: str|Path) -> None:
     :param df: retrieved from clean_data() function. Cleaned information.
     :param output_path: path where the file is saved. Search in init.py to find OUTPUT_DIR.
     """
+    
 
     #Export that file into the folder
     df.to_csv(output_path, index=False)

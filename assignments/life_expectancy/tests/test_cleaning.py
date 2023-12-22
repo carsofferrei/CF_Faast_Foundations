@@ -7,6 +7,7 @@ from life_expectancy.cleaning import clean_data
 from life_expectancy.cleaning import save_data
 from . import OUTPUT_DIR
 
+
 input_path: Path = OUTPUT_DIR / "eu_life_expectancy_raw.tsv"
 output_path: Path = OUTPUT_DIR / 'pt_life_expectancy.csv'
 
