@@ -103,6 +103,8 @@ def main() -> None: # pragma: no cover
     #save to .csv
     save_data(df_cleaned, args.o)
 
+    return df_cleaned
+
 if __name__ == "__main__": # pragma: no cover
     main()
     
