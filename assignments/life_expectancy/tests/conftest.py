@@ -27,24 +27,28 @@ def run_before_and_after_tests() -> None:
     file_path.unlink(missing_ok=True)
 
 
+# Fixture that read the expected results from applying clean_data() and filter the region 'PT'
 @pytest.fixture(scope="session")
 def pt_life_expectancy_expected() -> pd.DataFrame:
     """Fixture to load the expected output of the cleaning script"""
     return pd.read_csv(FIXTURES_DIR / "pt_life_expectancy_expected.csv")
 
 
+# Fixture that read raw information after normalize columns
 @pytest.fixture(scope="session")
 def eu_life_expectancy_expected() -> pd.DataFrame:
     """Fixture to load the expected output of the cleaning script"""
     return pd.read_csv(FIXTURES_DIR / "eu_life_expectancy_expected.csv")
 
 
+# Fixture that read raw information
 @pytest.fixture(scope="session")
 def eu_life_expectancy_raw() -> pd.DataFrame:
     """Fixture to load the raw initial data for testing"""
     return pd.read_csv(FIXTURES_DIR / "eu_life_expectancy_raw.tsv", sep="[\t]")
 
 
+# DataFrame that results from applying clean_data() to the raw information
 @pytest.fixture(scope="session")
 def eu_life_expectancy_cleaned(eu_life_expectancy_raw: pd.DataFrame) -> pd.DataFrame:
     """Fixture to load the raw initial data for testing"""

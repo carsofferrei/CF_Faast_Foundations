@@ -4,7 +4,7 @@ from pathlib import Path
 from life_expectancy.cleaning import clean_data
 
 
-def test_clean_data(eu_life_expectancy_raw, pt_life_expectancy_expected):
+def test_clean_data(eu_life_expectancy_raw, pt_life_expectancy_expected) -> None:
     """Compare the output of the "clean_data" function to the expected output
         Args:
             eu_life_expectancy_raw (Fixture): load the expected raw data 
