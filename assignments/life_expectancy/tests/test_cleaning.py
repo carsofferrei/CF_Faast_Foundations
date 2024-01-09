@@ -1,13 +1,16 @@
 """Tests for the cleaning module"""
-from pathlib import Path
 import pandas as pd
 from pathlib import Path
-from . import FIXTURES_DIR
 from life_expectancy.cleaning import clean_data
 
 
 def test_clean_data(eu_life_expectancy_raw, pt_life_expectancy_expected):
-    """Run the `clean_data` function and compare the output to the expected output"""
+    """Compare the output of the "clean_data" function to the expected output
+        Args:
+            eu_life_expectancy_raw (Fixture): load the expected raw data 
+            pt_life_expectancy_expected (Fixture): load the expected output of the cleaning script
+        Returns:
+    """
     pt_life_expectancy_actual = clean_data(
         eu_life_expectancy_raw, "PT"
     ).reset_index(drop=True)

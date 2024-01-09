@@ -1,7 +1,7 @@
 """Pytest configuration file"""
 import pandas as pd
 import pytest
-
+from life_expectancy.cleaning import clean_data 
 from . import FIXTURES_DIR, OUTPUT_DIR
 
 @pytest.fixture(autouse=True)
@@ -41,5 +41,12 @@ def eu_life_expectancy_expected() -> pd.DataFrame:
 
 @pytest.fixture(scope="session")
 def eu_life_expectancy_raw() -> pd.DataFrame:
-    """Fixture to load the expected output of the cleaning script"""
-    return pd.read_csv(OUTPUT_DIR / "eu_life_expectancy_raw.tsv", sep="\t")
+    """Fixture to load the raw initial data for testing"""
+    return pd.read_csv(FIXTURES_DIR / "eu_life_expectancy_raw.tsv", sep="[\t]")
+
+
+@pytest.fixture(scope="session")
+def eu_life_expectancy_cleaned(eu_life_expectancy_raw: pd.DataFrame) -> pd.DataFrame:
+    """Fixture to load the raw initial data for testing"""
+    eu_life_expectancy_cleaned = clean_data(eu_life_expectancy_raw, "PT").reset_index(drop=True)
+    return eu_life_expectancy_cleaned
