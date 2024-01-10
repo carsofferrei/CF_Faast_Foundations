@@ -8,7 +8,7 @@ input_path = "/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/
 region = 'PT'
 output_path = '/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/pt_life_expectancy.csv'
 
-def test_main(pt_life_expectancy_expected, monkeypatch: MonkeyPatch):
+def test_main(pt_life_expectancy_expected):
     """Run the `main` function and compare the output to the expected output
     Args:
         pt_life_expectancy_expected (Fixture) : load the expected output of the cleaning script
@@ -16,16 +16,6 @@ def test_main(pt_life_expectancy_expected, monkeypatch: MonkeyPatch):
             functions or classes during tests.
     Returns:
     """
-    # Define a mock function to replace pd.DataFrame.to_csv
-    def mock_to_csv(*args, **kwargs):
-        print("Data saved successfully")
-
-    # Create and empty dataframe
-    data = pd.DataFrame()
-
-    # Patch pd.DataFrame.to_csv to return the mock function instead of the real one
-    monkeypatch.setattr(data, 'to_csv', mock_to_csv)
-
     # Call the main function and get the result
     pt_life_expectancy_actual = main(input_path, region, output_path).reset_index(drop=True)
 
