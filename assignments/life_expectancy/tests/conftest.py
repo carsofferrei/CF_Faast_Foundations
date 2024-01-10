@@ -45,7 +45,8 @@ def eu_life_expectancy_expected() -> pd.DataFrame:
 @pytest.fixture(scope="session")
 def eu_life_expectancy_raw() -> pd.DataFrame:
     """Fixture to load the raw initial data for testing"""
-    return pd.read_csv(FIXTURES_DIR / "eu_life_expectancy_raw.tsv", sep="[\t]")
+    eu_life_expectancy_raw = pd.read_csv(OUTPUT_DIR / "eu_life_expectancy_raw.tsv", sep="[\t]")
+    return eu_life_expectancy_raw
 
 
 # DataFrame that results from applying clean_data() to the raw information
