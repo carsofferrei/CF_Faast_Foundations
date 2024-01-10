@@ -1,6 +1,5 @@
 """Tests for the main module"""
 import pandas as pd
-from pytest import MonkeyPatch
 from life_expectancy.cleaning import main
 from . import OUTPUT_DIR
 
