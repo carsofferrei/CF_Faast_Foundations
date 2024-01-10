@@ -3,7 +3,7 @@ import argparse
 from pathlib import Path
 import pandas as pd
 from pandas import DataFrame
-
+from life_expectancy.tests import OUTPUT_DIR
 
 def load_data(input_path: str|Path, delimiter: str = "[\t]") -> DataFrame:
     """Function that load the .tsv data
@@ -97,16 +97,17 @@ def main(input_path: str|Path,
 
     return df_cleaned
 
+
 if __name__ == "__main__": # pragma: no cover
 
     parser = argparse.ArgumentParser()
     parser.prog = 'cleaning.py'
     parser.description = "This is where the command-line utility's description goes."
     parser.epilog = "This is where the command-line utility's epilog goes."
-    parser.add_argument('-i', default = "/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/eu_life_expectancy_raw.tsv", help="You need to put here the path of the input file")
+    parser.add_argument('-i', default = f'{OUTPUT_DIR}/eu_life_expectancy_raw.tsv', help="You need to put here the path of the input file")
     parser.add_argument('-d', default= "[\t]", help = "Delimiter.")
     parser.add_argument('-r', default= 'PT', help = "Filter for the region you want to select.")
-    parser.add_argument('-o', default = '/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/pt_life_expectancy.csv', help="You need to put here the path where you want to write the output file")
+    parser.add_argument('-o', default = f'{OUTPUT_DIR}/pt_life_expectancy.csv', help="You need to put here the path where you want to write the output file")
     args = parser.parse_args()
     
     main(input_path = args.i, region = args.r,  output_path = args.o, delimiter = args.d)
