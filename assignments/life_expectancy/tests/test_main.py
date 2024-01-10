@@ -4,9 +4,9 @@ from pytest import MonkeyPatch
 from life_expectancy.cleaning import main
 from . import OUTPUT_DIR
 
-input_path = "/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/eu_life_expectancy_raw.tsv"
+input_path = f'{OUTPUT_DIR}/eu_life_expectancy_raw.tsv'
 region = 'PT'
-output_path = '/workspaces/CF_Faast_Foundations/assignments/life_expectancy/data/pt_life_expectancy.csv'
+output_path = f'{OUTPUT_DIR}/pt_life_expectancy.csv'
 
 def test_main(pt_life_expectancy_expected):
     """Run the `main` function and compare the output to the expected output
