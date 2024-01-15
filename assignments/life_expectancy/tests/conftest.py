@@ -29,8 +29,8 @@ def eu_life_expectancy_raw() -> pd.DataFrame:
 
 # DataFrame that results from applying clean_data() to the raw information
 @pytest.fixture(scope="session")
-def eu_life_expectancy_cleaned(eu_life_expectancy_raw: pd.DataFrame) -> pd.DataFrame:
+def eu_life_expectancy_PT_CLEAN(eu_life_expectancy_raw: pd.DataFrame) -> pd.DataFrame:
     """Fixture to load the raw initial data for testing"""
-    eu_life_expectancy_cleaned = clean_data(eu_life_expectancy_raw, "PT").reset_index(drop=True)
-    return eu_life_expectancy_cleaned
+    eu_life_expectancy_PT_CLEAN = clean_data(eu_life_expectancy_raw, "PT").reset_index(drop=True)
+    return eu_life_expectancy_PT_CLEAN
 
