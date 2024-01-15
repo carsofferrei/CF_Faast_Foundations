@@ -79,7 +79,7 @@ def main(input_path: str|Path,
          region: str,
          output_path: str|Path,
          delimiter: str = "[\t]"
-        ) -> DataFrame: # pragma: no cover
+        ) -> DataFrame:
     """
     call three functions defined above:
         load_data() -> data loaded from a file
@@ -88,17 +88,14 @@ def main(input_path: str|Path,
     """
 
     # call and return the .csv data to the correct folder
-    #load data
     df_loaded = load_data(input_path, delimiter)
-    #clean_data 
     df_cleaned = clean_data(df_loaded, region)
-    #save to .csv
     save_data(df_cleaned, output_path)
 
     return df_cleaned
 
 
-if __name__ == "__main__": # pragma: no cover
+if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.prog = 'cleaning.py'
