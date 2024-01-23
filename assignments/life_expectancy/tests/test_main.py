@@ -1,10 +1,11 @@
 """Tests for the main module"""
 import pandas as pd
 from life_expectancy.cleaning import main
+from life_expectancy.class_region import Region
 from . import OUTPUT_DIR
 
+
 input_path = f'{OUTPUT_DIR}/eu_life_expectancy_raw.tsv'
-region = 'PT'
 output_path = f'{OUTPUT_DIR}/pt_life_expectancy.csv'
 
 def test_main(pt_life_expectancy_expected):
@@ -14,7 +15,7 @@ def test_main(pt_life_expectancy_expected):
     Returns:
     """
     # Call the main function and get the result
-    pt_life_expectancy_actual = main(input_path, region, output_path).reset_index(drop=True)
+    pt_life_expectancy_actual = main(input_path, output_path, region = Region.PT).reset_index(drop=True)
 
     pd.testing.assert_frame_equal(
         pt_life_expectancy_actual, pt_life_expectancy_expected

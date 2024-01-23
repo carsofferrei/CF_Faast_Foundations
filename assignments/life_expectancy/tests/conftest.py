@@ -1,8 +1,8 @@
 """Pytest configuration file"""
 import pandas as pd
 import pytest
-from life_expectancy.cleaning import clean_data 
 from . import FIXTURES_DIR, OUTPUT_DIR
+from life_expectancy.class_region import Region
 
 
 # Fixture that read the expected results from applying clean_data() and filter the region 'PT'
@@ -26,11 +26,13 @@ def eu_life_expectancy_raw() -> pd.DataFrame:
     eu_life_expectancy_raw = pd.read_csv(OUTPUT_DIR / "eu_life_expectancy_raw.tsv", sep="[\t]", engine = "python")
     return eu_life_expectancy_raw
 
-
-# DataFrame that results from applying clean_data() to the raw information
+# Fixture that read regions
 @pytest.fixture(scope="session")
-def eu_life_expectancy_PT_CLEAN(eu_life_expectancy_raw: pd.DataFrame) -> pd.DataFrame:
-    """Fixture to load the raw initial data for testing"""
-    eu_life_expectancy_PT_CLEAN = clean_data(eu_life_expectancy_raw, "PT").reset_index(drop=True)
-    return eu_life_expectancy_PT_CLEAN
+def expected_regions() -> pd.DataFrame:
+    """Fixture that read regions"""
+    return [
+        'AT','FI','ES','EL','EE','DK','DE','CZ','CY','CH','BG','BE','FX','SK','SI',\
+        'SE','RO','PT','PL','NO','NL','LU','LT','IT','UK','IS','HU','IE','MT','MK','LI',\
+        'FR','RS','HR','LV','UA','TR','ME','AL','AZ','GE','BY','AM','MD','SM','RU','XK'
+    ]
 
