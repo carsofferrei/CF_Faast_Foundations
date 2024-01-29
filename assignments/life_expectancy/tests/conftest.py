@@ -2,7 +2,7 @@
 import pandas as pd
 import pytest
 from . import FIXTURES_DIR, OUTPUT_DIR
-from life_expectancy.class_region import Region
+from life_expectancy.region import Region
 
 
 # Fixture that read the expected results from applying clean_data() and filter the region 'PT'

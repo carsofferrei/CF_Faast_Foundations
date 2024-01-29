@@ -1,7 +1,7 @@
 """Tests for the main module"""
 import pandas as pd
 from life_expectancy.cleaning import main
-from life_expectancy.class_region import Region
+from life_expectancy.region import Region
 from . import OUTPUT_DIR
 
 

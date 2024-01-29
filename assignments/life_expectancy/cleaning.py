@@ -4,7 +4,7 @@ from pathlib import Path
 import pandas as pd
 from pandas import DataFrame
 from life_expectancy.tests import OUTPUT_DIR
-from life_expectancy.class_region import Region
+from life_expectancy.region import Region
 
 
 def load_data(input_path: str|Path, delimiter: str = "[\t]") -> DataFrame:
@@ -61,7 +61,7 @@ def clean_data(df: DataFrame, region: Region = Region.PT) -> DataFrame:
     df_droped_nas = df_col_renamed.dropna(subset=['value'])
 
     #Filter the final dataset
-    df_cleaned = df_droped_nas[df_droped_nas['region'] == region.value]
+    df_cleaned = df_droped_nas[df_droped_nas['region'].str.lower() == region.value.lower()]
 
     return df_cleaned
 
@@ -105,7 +105,7 @@ if __name__ == "__main__":
     parser.epilog = "This is where the command-line utility's epilog goes."
     parser.add_argument('-i', default = f'{OUTPUT_DIR}/eu_life_expectancy_raw.tsv', help="You need to put here the path of the input file")
     parser.add_argument('-d', default= "[\t]", help = "Delimiter.")
-    parser.add_argument('-r', type = Region, choices = list(Region), default = Region.PT, help = "Filter for the region you want to select.")
+    parser.add_argument('-r', type = Region, choices = Region, default = Region.PT, help = "Filter for the region you want to select.")
     parser.add_argument('-o', default = f'{OUTPUT_DIR}/{parser.parse_args().r.value.lower()}_life_expectancy.csv', help="You need to put here the path where you want to write the output file")
     args = parser.parse_args()
     

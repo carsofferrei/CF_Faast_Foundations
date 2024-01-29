@@ -1,7 +1,7 @@
 """Tests for the cleaning module"""
 import pandas as pd
 from life_expectancy.cleaning import clean_data
-from life_expectancy.class_region import Region
+from life_expectancy.region import Region
 
 
 def test_clean_data(eu_life_expectancy_raw, pt_life_expectancy_expected) -> None:
