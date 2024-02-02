@@ -109,5 +109,5 @@ if __name__ == "__main__":
     parser.add_argument('-o', default = f'{OUTPUT_DIR}/{parser.parse_args().r.value.lower()}_life_expectancy.csv', help="You need to put here the path where you want to write the output file")
     args = parser.parse_args()
     
-    main(input_path = args.i, region = args.r.value,  output_path = args.o, delimiter = args.d)
+    main(input_path = args.i, region = args.r,  output_path = args.o, delimiter = args.d)
     
