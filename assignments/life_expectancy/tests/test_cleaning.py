@@ -1,7 +1,7 @@
 """Tests for the cleaning module"""
 import pandas as pd
-from pathlib import Path
 from life_expectancy.cleaning import clean_data
+from life_expectancy.region import Region
 
 
 def test_clean_data(eu_life_expectancy_raw, pt_life_expectancy_expected) -> None:
@@ -12,7 +12,7 @@ def test_clean_data(eu_life_expectancy_raw, pt_life_expectancy_expected) -> None
         Returns:
     """
     pt_life_expectancy_actual = clean_data(
-        eu_life_expectancy_raw, "PT"
+        eu_life_expectancy_raw, region = Region.PT
     ).reset_index(drop=True)
 
     pd.testing.assert_frame_equal(
