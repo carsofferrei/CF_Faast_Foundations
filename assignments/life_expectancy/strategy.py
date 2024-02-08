@@ -6,7 +6,9 @@ from life_expectancy.region import Region
 
 
 class FileStrategy(Protocol):
-    """Reads Aand Cleans the file"""
+    """Read and clean the file
+       Common function to the strategy.
+    """
 
     def load_file(self, input_path:Any):
         """
