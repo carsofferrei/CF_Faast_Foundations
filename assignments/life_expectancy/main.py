@@ -25,7 +25,9 @@ def main(input_path: str|Path,
         df_loaded = TSVCSVFilesStrategy().load_file(input_path)
         df_cleaned = clean_data(df_loaded, region)
     
-    return save_data(df_cleaned, output_path)
+    save_data(df_cleaned, output_path)
+
+    return df_cleaned
 
 
 if __name__ == "__main__":
