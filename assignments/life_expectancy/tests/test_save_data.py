@@ -3,7 +3,7 @@
 import os
 from unittest.mock import patch
 from pandas import DataFrame
-from life_expectancy.cleaning import save_data
+from life_expectancy.strategy import save_data
 from . import OUTPUT_DIR
 
 def test_save_data() -> None:
