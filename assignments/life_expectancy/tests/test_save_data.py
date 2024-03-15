@@ -3,7 +3,7 @@
 import os
 from unittest.mock import patch
 from pandas import DataFrame
-from life_expectancy.cleaning import save_data
+from life_expectancy.strategy import save_data
 from . import OUTPUT_DIR
 
 def test_save_data() -> None:
@@ -23,7 +23,6 @@ def test_save_data() -> None:
         # if the save_data function is achieving it goal.
         to_csv_mock.assert_called_once()
 
-
 def test_data_folder() -> None:
     """
     Run unit test of function `save_data` and test if the fuction save a file in expected folder
@@ -31,3 +30,4 @@ def test_data_folder() -> None:
     data = DataFrame()
     save_data(data, f'{OUTPUT_DIR}/SAVE_DATA_FOLDER.csv')
     assert os.path.isfile(f'{OUTPUT_DIR}/SAVE_DATA_FOLDER.csv') is True
+    

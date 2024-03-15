@@ -26,6 +26,13 @@ def eu_life_expectancy_raw() -> pd.DataFrame:
     eu_life_expectancy_raw = pd.read_csv(OUTPUT_DIR / "eu_life_expectancy_raw.tsv", sep="[\t]", engine = "python")
     return eu_life_expectancy_raw
 
+# Fixture that read raw information
+@pytest.fixture(scope="session")
+def eurostat_json() -> pd.DataFrame:
+    """Fixture to load the raw initial data for testing"""
+    eurostat_json = pd.read_json(OUTPUT_DIR / "eurostat_life_expect.zip", compression='zip', encoding='utf-8')
+    return eurostat_json
+
 # Fixture that read regions
 @pytest.fixture(scope="session")
 def expected_regions() -> pd.DataFrame:
@@ -35,4 +42,3 @@ def expected_regions() -> pd.DataFrame:
         'SE','RO','PT','PL','NO','NL','LU','LT','IT','UK','IS','HU','IE','MT','MK','LI',\
         'FR','RS','HR','LV','UA','TR','ME','AL','AZ','GE','BY','AM','MD','SM','RU','XK'
     ]
-

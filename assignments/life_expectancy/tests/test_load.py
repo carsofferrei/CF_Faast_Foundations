@@ -1,20 +1,33 @@
 """Tests for the load module"""
-import pandas as pd
-from life_expectancy.cleaning import load_data
-from . import FIXTURES_DIR
+import os
+from unittest.mock import patch
+from life_expectancy.strategy import JSONFilesStrategy, TSVCSVFilesStrategy
+from . import OUTPUT_DIR
 
-def test_load_data() -> None:
-    """Compare the output of the "clean_data" function to the expected output
-            actual_data (Fixture): dataset to be compared to the expected
-            expected_data: Sample dataset for test load data
-    """
-    actual_data = load_data(FIXTURES_DIR / "test_dataset.tsv")
-    expected_data = pd.DataFrame.from_dict(
-        {
-            "col_1,col_2,col_3": ["1,10,15", "1,5,10", "BG,PT,TT"],
-            "2021": [79, 61, 70],
-            "2020": [85, 60, 50],
-        }
-    )
+def test_load_csv(eu_life_expectancy_raw):
+    """Verify the function can load the data from the fixture."""
+    with patch("pandas.read_csv") as read_csv_mock:
+        read_csv_mock.side_effect = [eu_life_expectancy_raw]
+        
+        # Call the method under test
+        strategy = TSVCSVFilesStrategy()
+        file_path = os.path.join(OUTPUT_DIR, "eu_life_expectancy_raw.tsv")
+        strategy.load_file(file_path)
+        
+        # Assert that read_csv was called once
+        read_csv_mock.assert_called_once()
 
-    pd.testing.assert_frame_equal(actual_data, expected_data)
+
+def test_load_json(eurostat_json):
+    """Verify if the read_json function is called once."""
+    with patch("pandas.read_json") as read_json_mock:
+        read_json_mock.side_effect = [eurostat_json]
+        
+        # Call the method under test
+        strategy = JSONFilesStrategy()
+        file_path = os.path.join(OUTPUT_DIR, "eurostat_life_expect.zip")
+        strategy.load_file(file_path)
+        
+        # Assert that read_json was called once
+        read_json_mock.assert_called_once()
+        

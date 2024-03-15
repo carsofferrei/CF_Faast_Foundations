@@ -1,21 +1,7 @@
 import re
-import argparse
-from pathlib import Path
 import pandas as pd
 from pandas import DataFrame
-from life_expectancy.tests import OUTPUT_DIR
 from life_expectancy.region import Region
-
-
-def load_data(input_path: str|Path, delimiter: str = "[\t]") -> DataFrame:
-    """Function that load the .tsv data
-    :param input_path: path where the data to be loaded is located. Search in init.py to find OUTPUT_DIR. Raw data.
-    :param delimiter: pass the delimiter appropried when reading the input file
-    :return DataFrame: Loaded dataframe
-    """
-    return pd.read_csv(input_path, sep=delimiter, engine="python")
-
-
 
 def clean_data(df: DataFrame, region: Region = Region.PT) -> DataFrame:
     """Function that load the data
@@ -64,50 +50,4 @@ def clean_data(df: DataFrame, region: Region = Region.PT) -> DataFrame:
     df_cleaned = df_droped_nas[df_droped_nas['region'].str.lower() == region.value.lower()]
 
     return df_cleaned
-
-
-def save_data(df: pd.DataFrame, output_path: str|Path) -> None:
-    """Fuction that save the data into the expected folder as .csv
-    :param df: retrieved from clean_data() function. Cleaned information.
-    :param output_path: path where the file is saved. Search in init.py to find OUTPUT_DIR.
-    """
-    #Export that file into the folder
-    df.to_csv(output_path, index=False)
-    print(f"Finish data cleaning The file was saved as csv in:\n{output_path}\n")
-
-
-
-def main(input_path: str|Path,
-         output_path: str|Path,
-         delimiter: str = "[\t]",
-         region: Region = Region.PT
-        ) -> DataFrame:
-    """
-    call three functions defined above:
-        load_data() -> data loaded from a file
-        clean_data() -> data cleaned after several operations to the loaded data
-        save_data() -> data saved as .csv
-    """
-
-    # call and return the .csv data to the correct folder
-    df_loaded = load_data(input_path, delimiter)
-    df_cleaned = clean_data(df_loaded, region)
-    save_data(df_cleaned, output_path)
-
-    return df_cleaned
-
-
-if __name__ == "__main__":
-
-    parser = argparse.ArgumentParser()
-    parser.prog = 'cleaning.py'
-    parser.description = "This is where the command-line utility's description goes."
-    parser.epilog = "This is where the command-line utility's epilog goes."
-    parser.add_argument('-i', default = f'{OUTPUT_DIR}/eu_life_expectancy_raw.tsv', help="You need to put here the path of the input file")
-    parser.add_argument('-d', default= "[\t]", help = "Delimiter.")
-    parser.add_argument('-r', type = Region, choices = Region, default = Region.PT, help = "Filter for the region you want to select.")
-    parser.add_argument('-o', default = f'{OUTPUT_DIR}/{parser.parse_args().r.value.lower()}_life_expectancy.csv', help="You need to put here the path where you want to write the output file")
-    args = parser.parse_args()
-    
-    main(input_path = args.i, region = args.r,  output_path = args.o, delimiter = args.d)
     
